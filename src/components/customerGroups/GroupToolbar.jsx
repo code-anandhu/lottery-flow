@@ -1,8 +1,17 @@
 import { FiPlus, FiSearch } from "react-icons/fi";
 
-const GroupToolbar = ({ onAddGroup, searchTerm, setSearchTerm }) => {
+const GroupToolbar = ({ onAddGroup, searchTerm, setSearchTerm , onImport }) => {
 
+ const handleFileChange = (e) => {
+    const file = e.target.files[0];
 
+    if (!file) return;
+
+    onImport(file);
+
+    // Reset input so the same file can be selected again
+    e.target.value = "";
+  };
   
 
 
@@ -42,6 +51,22 @@ const GroupToolbar = ({ onAddGroup, searchTerm, setSearchTerm }) => {
             />
 
           </div>
+
+
+             <label className="flex h-11 cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-5 text-sm font-medium transition hover:bg-gray-100">
+
+            {/* <FiUpload className="" /> */}
+
+          <p className="py-3">  Import</p>
+
+            <input
+              type="file"
+              accept=".xlsx,.xls,.csv"
+              hidden
+              onChange={handleFileChange}
+            />
+
+          </label>
 
           <button
             onClick={onAddGroup}

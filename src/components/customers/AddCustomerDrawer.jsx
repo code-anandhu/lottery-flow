@@ -134,7 +134,7 @@ const handleClose = () => {
 
                     <button
                         onClick={handleSave}
-                        className="rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-green-700"
+                        className="rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-blue-800"
                     >
                         {editingCustomer ? "Update Customer" : "Save Customer"}
                     </button>

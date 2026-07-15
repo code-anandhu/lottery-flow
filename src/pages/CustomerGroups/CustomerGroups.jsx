@@ -30,6 +30,23 @@ const CustomerGroups = () => {
   setGroups((prev) => [...prev, group]);
 };
 
+  const handleImport = (file) => {
+
+  importCustomers(file, (newCustomers) => {
+
+    setCustomers((prev) => [
+      ...prev,
+      ...newCustomers,
+    ]);
+
+    alert(
+      `${newCustomers.length} customers imported successfully`
+    );
+
+  });
+
+};
+
     return (
         <div className="space-y-6">
 
@@ -37,6 +54,7 @@ const CustomerGroups = () => {
                 onAddGroup={() => setDrawerOpen(true)}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
+                onImport={handleImport}
             />
 
          <div className="py-4">
