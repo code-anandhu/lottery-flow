@@ -7,9 +7,9 @@ const CustomerTable = ({
     onDelete,
 }) => {
     return (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
 
-            <table className="min-w-full">
+            <table className="min-w-[800px] w-full">
 
                 {/* Table Header */}
 

@@ -8,28 +8,35 @@ import {
     FiSettings,
     FiLogOut,
 } from "react-icons/fi";
-import { NavLink , useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBookReader } from "react-icons/fa";
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }) => {
     const navigate = useNavigate();
     const handleLogout = () => {
 
-  // Later you can remove token here
-  // localStorage.removeItem("token");
+        // Later you can remove token here
+        // localStorage.removeItem("token");
 
-  navigate("/");
-};
+        navigate("/");
+    };
 
     return (
-        <aside className="w-64 h-screen bg-blue-950 border-r border-gray-200 flex flex-col">
+        <aside className="flex h-screen w-64 flex-col border-r border-gray-200 bg-blue-950">
 
             {/* Logo */}
 
             <div className="h-20 flex items-center px-6 border-b">
                 <h1 className="text-2xl font-bold text-white">
-                   <FaBookReader className="h-5" /> Lottery Flow
+                    <FaBookReader className="h-5" /> Lottery Flow
                 </h1>
+
+                <button
+                    onClick={onClose}
+                    className="text-white text-2xl md:hidden"
+                >
+                    ✕
+                </button>
             </div>
 
             {/* Navigation */}
@@ -43,7 +50,7 @@ const Sidebar = () => {
                         Dashboard
                     </li> */}
 
-                     <NavLink
+                    <NavLink
                         to="/customers"
                         className={({ isActive }) =>
                             `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive

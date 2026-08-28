@@ -42,11 +42,11 @@ const CustomerToolbar = ({
 
         {/* Right */}
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col gap-3 lg:w-auto lg:flex-row lg:items-center">
 
           {/* Search */}
 
-          <div className="flex h-11 w-80 items-center rounded-lg border border-gray-300 px-3">
+          <div className="flex h-11 w-full min-w-0 items-center rounded-lg border border-gray-300 px-3 lg:w-80">
 
             <FiSearch className="mr-2 text-gray-400" />
 

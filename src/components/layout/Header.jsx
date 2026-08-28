@@ -2,12 +2,14 @@ import {
   FiSearch,
   FiBell,
   FiChevronDown,
+  FiMenu,
+  FiArrowLeft,
 } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Header = () => {
-
+const Header = ({ onMenuClick }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const pageTitle = {
     "/customers": "Customers",
@@ -19,29 +21,47 @@ const Header = () => {
   };
 
   return (
-    <header className="flex h-20 items-center justify-between border-b bg-white px-8 shadow-sm">
+    <header className="flex min-h-16 items-center justify-between border-b bg-white px-3 py-3 shadow-sm sm:min-h-20 sm:px-6 lg:px-8">
 
       {/* Left */}
+      <div className="flex min-w-0 items-center gap-2">
 
-      <div>
+        {/* Mobile Menu */}
+        <button
+          onClick={onMenuClick}
+          className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 md:hidden"
+          aria-label="Open menu"
+        >
+          <FiMenu size={22} />
+        </button>
 
-        <h1 className="text-3xl font-bold text-slate-800">
-          {pageTitle[location.pathname] || "Dashboard"}
-        </h1>
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+          aria-label="Go back"
+        >
+          <FiArrowLeft size={20} />
+        </button>
 
-        <p className="mt-1 text-sm text-gray-500">
-          Welcome back, manage your business efficiently.
-        </p>
+        {/* Title */}
+        <div className="min-w-0">
+          <h1 className="truncate text-lg font-bold text-slate-800 sm:text-2xl lg:text-3xl">
+            {pageTitle[location.pathname] || "Dashboard"}
+          </h1>
+
+          <p className="mt-1 hidden text-sm text-gray-500 sm:block">
+            Welcome back, manage your business efficiently.
+          </p>
+        </div>
 
       </div>
 
       {/* Right */}
+      <div className="flex items-center gap-1 sm:gap-3 lg:gap-6">
 
-      <div className="flex items-center gap-6">
-
-        {/* Search */}
-
-        <div className="flex h-11 w-72 items-center rounded-xl border border-gray-200 px-4">
+        {/* Desktop Search */}
+        <div className="hidden h-11 w-72 items-center rounded-xl border border-gray-200 px-4 lg:flex">
 
           <FiSearch className="text-gray-400" />
 
@@ -53,25 +73,36 @@ const Header = () => {
 
         </div>
 
+        {/* Mobile / Tablet Search */}
+        <button
+          className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
+          aria-label="Search"
+        >
+          <FiSearch size={20} />
+        </button>
+
         {/* Notification */}
+        <button
+          className="relative rounded-lg border p-2 hover:bg-gray-100 sm:p-3"
+          aria-label="Notifications"
+        >
 
-        <button className="relative rounded-xl border p-3 hover:bg-gray-100">
+          <FiBell className="text-lg text-gray-600 sm:text-xl" />
 
-          <FiBell className="text-xl text-gray-600" />
-
-          <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-red-500"></span>
+          <span className="absolute right-0 top-0 h-2.5 w-2.5 rounded-full bg-red-500 sm:h-3 sm:w-3" />
 
         </button>
 
         {/* Profile */}
+        <button className="flex items-center gap-2 rounded-xl px-1 py-2 hover:bg-gray-100 sm:gap-3 sm:px-3">
 
-        <button className="flex items-center gap-3 rounded-xl  px-3 py-2 hover:bg-gray-100">
-
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
+          {/* Avatar */}
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white sm:h-11 sm:w-11">
             A
           </div>
 
-          <div className="text-left">
+          {/* Profile Details */}
+          <div className="hidden text-left sm:block">
 
             <h3 className="font-semibold text-slate-800">
               Admin
@@ -83,7 +114,8 @@ const Header = () => {
 
           </div>
 
-          <FiChevronDown className="text-gray-500" />
+          {/* Arrow */}
+          <FiChevronDown className="hidden text-gray-500 sm:block" />
 
         </button>
 
