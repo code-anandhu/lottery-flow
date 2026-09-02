@@ -29,7 +29,7 @@ export const exportCustomers = (customers) => {
 
 };
 
-// IMPORT CUSTOMERS 
+
 
 /* ===========================
    IMPORT CUSTOMERS
@@ -71,4 +71,36 @@ export const importCustomers = (file, callback) => {
 
   reader.readAsArrayBuffer(file);
 
+};
+
+// IMPORT GROUPS
+
+
+export const importGroups = (file, callback) => {
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    const data = new Uint8Array(event.target.result);
+
+    const workbook = XLSX.read(data, {
+      type: "array",
+    });
+
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const json = XLSX.utils.sheet_to_json(worksheet);
+
+    const groups = json.map((row, index) => ({
+      id: Date.now() + index,
+      name: row["Group Name"] || "",
+      description: row["Description"] || "",
+      members: Number(row["Members"]) || 0,
+      color: row["Color"] || "blue",
+    }));
+
+    callback(groups);
+  };
+
+  reader.readAsArrayBuffer(file);
 };

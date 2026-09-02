@@ -1,16 +1,8 @@
 import { useState } from "react";
 
-const BroadcastForm = () => {
+const BroadcastForm = ({formData , setFormData}) => {
 
-  const [formData, setFormData] = useState({
-    campaignName: "",
-    group: "VIP",
-    message: "",
-    sendType: "now",
-    date: "",
-    time: "",
-    image: null,
-  });
+ 
 
   const handleChange = (e) => {
     setFormData({

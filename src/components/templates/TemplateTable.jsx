@@ -1,6 +1,11 @@
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-const TemplateTable = ({ templates }) => {
+const TemplateTable = ({
+  templates,
+  onEdit,
+  onDelete,
+}) => {
+
   return (
     <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
 
@@ -48,18 +53,30 @@ const TemplateTable = ({ templates }) => {
               </td>
 
               <td className="px-6 py-5">
-                {template.message.slice(0, 40)}...
+                {template.message.length > 40
+                  ? `${template.message.slice(0, 40)}...`
+                  : template.message}
               </td>
 
               <td className="px-6 py-5">
 
                 <div className="flex justify-center gap-4">
 
-                  <button className="text-green-600">
+                  {/* Edit */}
+
+                  <button
+                    onClick={() => onEdit(template)}
+                    className="text-green-600 hover:text-green-800"
+                  >
                     <FiEdit2 />
                   </button>
 
-                  <button className="text-red-600">
+                  {/* Delete */}
+
+                  <button
+                    onClick={() => onDelete(template)}
+                    className="text-red-600 hover:text-red-800"
+                  >
                     <FiTrash2 />
                   </button>
 

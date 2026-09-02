@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AddGroupDrawer = ({ open, onClose, addGroup }) => {
+const AddGroupDrawer = ({
+  open,
+  onClose,
+  addGroup,
+  editingGroup,
+  updateGroup,
+}) => {
 
   const initialData = {
     name: "",
@@ -9,6 +15,19 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
   };
 
   const [formData, setFormData] = useState(initialData);
+
+  
+  useEffect(() => {
+    if (editingGroup) {
+      setFormData({
+        name: editingGroup.name,
+        description: editingGroup.description,
+        color: editingGroup.color,
+      });
+    } else {
+      setFormData(initialData);
+    }
+  }, [editingGroup]);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,14 +43,26 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
       return;
     }
 
-    addGroup({
-      id: Date.now(),
-      ...formData,
-      members: 0,
-    });
+    // Edit
+    if (editingGroup) {
+
+      updateGroup({
+        ...editingGroup,
+        ...formData,
+      });
+
+    } else {
+
+      // Add
+      addGroup({
+        id: Date.now(),
+        ...formData,
+        members: 0,
+      });
+
+    }
 
     setFormData(initialData);
-
     onClose();
   };
 
@@ -47,7 +78,7 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
         <div className="flex items-center justify-between border-b p-6">
 
           <h2 className="text-2xl font-bold">
-            Add Group
+            {editingGroup ? "Edit Group" : "Add Group"}
           </h2>
 
           <button
@@ -62,6 +93,8 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
         {/* Body */}
 
         <div className="flex-1 space-y-5 p-6">
+
+          {/* Group Name */}
 
           <div>
 
@@ -79,6 +112,8 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
 
           </div>
 
+          {/* Description */}
+
           <div>
 
             <label className="mb-2 block">
@@ -94,6 +129,8 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
             />
 
           </div>
+
+          {/* Color */}
 
           <div>
 
@@ -132,7 +169,7 @@ const AddGroupDrawer = ({ open, onClose, addGroup }) => {
             onClick={handleSave}
             className="rounded-lg bg-blue-600 px-6 py-2 text-white"
           >
-            Save Group
+            {editingGroup ? "Update Group" : "Save Group"}
           </button>
 
         </div>

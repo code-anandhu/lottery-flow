@@ -1,28 +1,35 @@
+import { useState } from "react";
 import BroadcastForm from "../../components/broadcast/BroadcastForm";
 import MessagePreview from "../../components/broadcast/MessagePreview";
 
 const Broadcast = () => {
 
-    return (
+  const [formData, setFormData] = useState({
+    campaignName: "",
+    group: "VIP",
+    message: "",
+    sendType: "now",
+    date: "",
+    time: "",
+    image: null,
+  });
 
-        <div className="grid gap-6 lg:grid-cols-3">
+  return (
+    <div className="grid gap-6 lg:grid-cols-3">
 
-            <div className="lg:col-span-2">
+      <div className="lg:col-span-2">
+        <BroadcastForm
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </div>
 
-                <BroadcastForm />
+      <div>
+        <MessagePreview formData={formData} />
+      </div>
 
-            </div>
-
-            <div>
-
-                <MessagePreview />
-
-            </div>
-
-        </div>
-
-    );
-
+    </div>
+  );
 };
 
 export default Broadcast;

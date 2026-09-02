@@ -12,7 +12,7 @@ import Settings from "../pages/Settings/Settings.jsx";
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
       <Routes>
         <Route path="/" element={<Login />} />
         {/* dashboard */}

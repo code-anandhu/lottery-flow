@@ -7,7 +7,7 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex h-screen w-full gap-4 overflow-hidden bg-slate-100 p-3 sm:p-4">
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
@@ -20,23 +20,24 @@ const DashboardLayout = () => {
       {/* Sidebar */}
       <div
         className={`
-          fixed inset-y-0 left-0 z-50
+          fixed inset-y-3 left-3 z-50
+           h-[calc(100vh-1.5rem)]
           transform transition-transform duration-300
-          md:static md:translate-x-0
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          md:static md:inset-y-0 md:left-0 md:translate-x-0
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+2rem)] md:translate-x-0"}
         `}
       >
         <Sidebar onClose={() => setSidebarOpen(false)} />
       </div>
 
       {/* Right Side */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col gap-4">
 
         {/* Header */}
         <Header onMenuClick={() => setSidebarOpen(true)} />
 
         {/* Page */}
-        <main className="min-w-0 flex-1 overflow-auto bg-gray-100 p-3 sm:p-4 lg:p-6">
+        <main className="min-w-0 flex-1 overflow-auto">
           <Outlet />
         </main>
 

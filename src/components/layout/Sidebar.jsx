@@ -1,6 +1,4 @@
 import {
-    FiGrid,
-    FiUsers,
     FiLayers,
     FiSend,
     FiFileText,
@@ -11,25 +9,35 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBookReader } from "react-icons/fa";
 
+const navItems = [
+    { to: "/customers", label: "Customers", icon: FiLayers },
+    { to: "/customer-groups", label: "Customer Groups", icon: FiLayers },
+    { to: "/broadcast", label: "Broadcast", icon: FiSend },
+    { to: "/templates", label: "Templates", icon: FiFileText },
+    { to: "/reports", label: "Reports", icon: FiBarChart2 },
+    { to: "/settings", label: "Settings", icon: FiSettings },
+];
+
 const Sidebar = ({ onClose }) => {
     const navigate = useNavigate();
-    const handleLogout = () => {
 
+    const handleLogout = () => {
         // Later you can remove token here
         // localStorage.removeItem("token");
-
         navigate("/");
     };
 
     return (
-        <aside className="flex h-screen w-64 flex-col border-r border-gray-200 bg-blue-950">
+        <aside className="flex h-full w-64 flex-col overflow-hidden rounded-2xl bg-blue-950 shadow-lg">
 
             {/* Logo */}
 
-            <div className="h-20 flex items-center px-6 border-b">
-                <h1 className="text-2xl font-bold text-white">
-                    <FaBookReader className="h-5" /> Lottery Flow
-                </h1>
+            <div className="flex h-20 shrink-0 items-center justify-between px-6">
+
+                <div className="flex items-center gap-2 text-white">
+                    <FaBookReader size={20} />
+                    <h1 className="text-xl font-bold">Lottery Flow</h1>
+                </div>
 
                 <button
                     onClick={onClose}
@@ -37,96 +45,33 @@ const Sidebar = ({ onClose }) => {
                 >
                     ✕
                 </button>
+
             </div>
 
             {/* Navigation */}
 
-            <nav className="flex-1 py-6">
+            <nav className="flex-1 overflow-y-auto px-4 py-4">
 
-                <ul className="space-y-2 px-4">
+                <ul className="space-y-1.5">
 
-                    {/* <li className="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-600 text-white cursor-pointer">
-                        <FiGrid />
-                        Dashboard
-                    </li> */}
+                    {navItems.map(({ to, label, icon: Icon }) => (
 
-                    <NavLink
-                        to="/customers"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiLayers />
-                        Customers
-                    </NavLink>
+                        <li key={to}>
+                            <NavLink
+                                to={to}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${isActive
+                                        ? "bg-blue-600 font-medium text-white shadow-sm"
+                                        : "text-slate-300 hover:bg-white/5 hover:text-white"
+                                    }`
+                                }
+                            >
+                                <Icon size={18} />
+                                {label}
+                            </NavLink>
+                        </li>
 
-                    <NavLink
-                        to="/customer-groups"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiLayers />
-                        Customer Groups
-                    </NavLink>
-
-                    <NavLink
-                        to="/broadcast"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiSend />
-                        Broadcast
-                    </NavLink>
-
-                    <NavLink
-                        to="/templates"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiFileText />
-                        Templates
-                    </NavLink>
-
-                    <NavLink
-                        to="/reports"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiBarChart2 />
-                        Reports
-                    </NavLink>
-
-                    <NavLink
-                        to="/settings"
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-lg px-4 py-3 ${isActive
-                                ? "bg-gray-600 text-white font-medium"
-                                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-                            }`
-                        }
-                    >
-                        <FiSettings />
-                        Settings
-                    </NavLink>
+                    ))}
 
                 </ul>
 
@@ -134,14 +79,14 @@ const Sidebar = ({ onClose }) => {
 
             {/* Logout */}
 
-            <div className="p-4 border-t">
+            <div className="shrink-0 border-t border-white/10 p-4">
 
-                <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-gray-500 hover:bg-amber-50 text-black  transition">
-
-                    <FiLogOut />
-
+                <button
+                    onClick={handleLogout}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/10 py-3.5 text-sm font-semibold text-white transition hover:bg-red-500/90"
+                >
+                    <FiLogOut size={17} />
                     Logout
-
                 </button>
 
             </div>

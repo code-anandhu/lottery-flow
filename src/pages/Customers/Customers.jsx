@@ -3,8 +3,7 @@ import CustomerToolbar from "../../components/customers/CustomerToolbar";
 import CustomerTable from "../../components/customers/CustomerTable";
 import AddCustomerDrawer from "../../components/customers/AddCustomerDrawer";
 import DeleteCustomerModal from "../../components/customers/DeleteCustomerModal";
-import { exportCustomers } from "../../utils/excel";
-import ImportCustomer from "../../components/customers/ImportCustomer";
+import { exportCustomers , importCustomers } from "../../utils/excel";
 
 
 
@@ -37,15 +36,15 @@ const Customers = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
     // Add Customer Function
-    const addCustomer = (customer) => {
-        setCustomers((prevCustomers) => [
-            ...prevCustomers,
-            {
-                id: Date.now(),
-                ...customer,
-            },
-        ]);
-    };
+ const addCustomer = (customer) => {
+  setCustomers((prevCustomers) => [
+    {
+      id: Date.now(),
+      ...customer,
+    },
+    ...prevCustomers,
+  ]);
+};
 
     const handleEdit = (customer) => {
         setEditingCustomer(customer);

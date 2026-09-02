@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const defaultData = {
+  company: "Lottery Flow",
+  owner: "Anandhu",
+  whatsapp: "+91 9876543210",
+  email: "admin@gmail.com",
+  address: "Kochi, Kerala",
+};
 
 const BusinessSettings = () => {
-  const [formData, setFormData] = useState({
-    company: "Lottery Flow",
-    owner: "Anandhu",
-    whatsapp: "+91 9876543210",
-    email: "admin@gmail.com",
-    address: "Kochi, Kerala",
+
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("businessSettings");
+
+    return savedData
+      ? JSON.parse(savedData)
+      : defaultData;
   });
 
   const handleChange = (e) => {
@@ -16,14 +25,24 @@ const BusinessSettings = () => {
     });
   };
 
+  const handleSave = () => {
+    localStorage.setItem(
+      "businessSettings",
+      JSON.stringify(formData)
+    );
+
+    alert("Business information saved successfully");
+  };
+
   return (
-    <div className="rounded-xl bg-white p-6 shadow-sm border border-gray-100 max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
         Business Information
       </h2>
 
-      {/* Grid wrapper for all inputs */}
       <div className="grid gap-5 md:grid-cols-2">
+
         <input
           type="text"
           name="company"
@@ -60,7 +79,6 @@ const BusinessSettings = () => {
           className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
         />
 
-        {/* Textarea moved inside the grid, spanning full width on medium screens and up */}
         <textarea
           rows="4"
           name="address"
@@ -69,13 +87,20 @@ const BusinessSettings = () => {
           placeholder="Address"
           className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 md:col-span-2"
         />
+
       </div>
 
       <div className="mt-6 flex justify-start py-3">
-        <button className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-800">
+
+        <button
+          onClick={handleSave}
+          className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-800"
+        >
           Save Changes
         </button>
+
       </div>
+
     </div>
   );
 };
